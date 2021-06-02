@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b1f486e1969719ad82b81d26ed3dda8f8f5aaaf24ed929a4d38222dbc8a9e30a
+-- hash: 6f4e058a318a6a9aa0a2386d2af9a6954b994a34d7a3f545ec25b63b0aa3b564
 
 name:           lngExpr
 version:        0.1.0.0
@@ -27,13 +27,15 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      IntgExpr
   other-modules:
       Paths_lngExpr
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , haskeline
+    , parsec
   default-language: Haskell2010
 
 executable lngExpr-exe
@@ -45,7 +47,9 @@ executable lngExpr-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , haskeline
     , lngExpr
+    , parsec
   default-language: Haskell2010
 
 test-suite lngExpr-test
@@ -58,5 +62,7 @@ test-suite lngExpr-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , haskeline
     , lngExpr
+    , parsec
   default-language: Haskell2010
