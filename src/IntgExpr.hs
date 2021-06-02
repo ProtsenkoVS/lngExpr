@@ -53,10 +53,6 @@ factor, term, expr, full :: Parser Expr
 factor  = parens expr 
        <|> do v <- lexem decimal
               return (Const v)
---term = chainl1 factor $ do mo <- mulOp
---                           return (BinOp mo)   
---expr = chainl1 term $ do ao <- addOp 
---                         return (BinOp ao)  			  
 term = chainl1 factor mulOp   
 expr = chainl1 term addOp  
 full = do spaces
