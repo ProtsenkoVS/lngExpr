@@ -9,7 +9,7 @@ data Expr = Const Integer
 data Op   = Plus | Minus | Times | Div | Mod  
              deriving (Show, Eq)
 
-------------------------------
+------------------------------ semantic functions -----------------
 eExpr :: Expr -> Integer 
 eExpr (Const v)        =  v 
 eExpr (BinOp bo e1 e2) = applyBo bo (eExpr e1) (eExpr e2) 
@@ -21,7 +21,12 @@ applyBo Times v1 v2 = v1 * v2
 applyBo Div v1 v2   = if v2 /= 0 then div v1 v2 else error "DivOnZero"
 applyBo Mod v1 v2   = if v2 /= 0 then mod v1 v2 else error "ModOnZero"
 
----------------------------------
+------------------------------ interpret ------------
+interpret :: String -> String
+interpret st = let e = parseExpr st 
+               in show $ eExpr e  
+
+------------------------------- parse-----------------------------  
 decimal :: Parser Integer
 decimal = do ds  <- many1 digit
              return (read ds) 
@@ -71,7 +76,7 @@ ex1 = BinOp Plus (Const 5) (BinOp Times (Const 4) (Const 3))
 ex1Str :: String 
 ex1Str = "  5 + 4   * 3 " 
 
----------------------------------
+--------------------------------- parse in application style --------------
 {-
 decimal :: Parser Integer
 decimal = (many1 digit) >>= (return . read)   
@@ -100,6 +105,7 @@ expr = term `chainl1` (BinOp <$> addOp)  -- (expOp addOp)
 parseExpr :: String -> Either ParseError Expr
 parseExpr s = parse (spaces *> expr <* eof) "" s
 -}
+------------------------------- syntax - Extand BNF ---------------------------
 {-
 expr    =  term , {addOp , term} ;
 addOp   =  ‘+’ | ‘_’ ;
